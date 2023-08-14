@@ -1,0 +1,30 @@
+.header-bg {
+  background-color: #272727;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 50px;
+}
+.h-j {
+  display: flex;
+  flex-direction: row;
+}
+
+.logout-btn {
+  background-color: #6366f1;
+  height: 25px;
+  width: 90px;
+  font-weight: bold;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.p {
+  margin-right: 40px;
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}

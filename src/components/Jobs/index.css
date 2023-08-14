@@ -1,0 +1,91 @@
+.jobs-bg {
+  background-color: #000000;
+  background-size: cover;
+  width: 100vw;
+  color: white;
+}
+
+.jobs-card {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  padding-left: 70px;
+}
+.h5-type-of-employee {
+  height: 5px;
+}
+.profile-bg {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/profile-bg.png');
+  width: 170px;
+  padding: 10px;
+  padding-left: 20px;
+  border-radius: 20px;
+  font-size: 12px;
+  color: white;
+}
+.profile-name {
+  color: #6366f1;
+}
+.short-bio {
+  font-size: 10px;
+  color: #6366f1;
+  margin-bottom: 10px;
+}
+.profile-size {
+  height: 25px;
+  width: 25px;
+}
+.filters-card {
+  width: 190px;
+  font-size: 10px;
+}
+.hr {
+  margin-top: 10px;
+  width: 170px;
+  height: 10px;
+}
+
+.employee-types-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.search-bg {
+  border-radius: 5px;
+  border-style: solid;
+  border-color: #333537;
+  border-width: 1px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-left: 10px;
+}
+
+.search-icon {
+  height: 20px;
+  width: 20px;
+}
+.search-input {
+  border-style: none;
+  outline: none;
+}
+.profile-bg-bg {
+  display: flex;
+  padding-right: 20px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-btn {
+  background-color: #333537;
+  height: 24px;
+  margin-top: 1px;
+  padding-top: 3px;
+  border-radius: 3px;
+  margin-bottom: 2px;
+  border-style: none;
+  color: white;
+  margin-left: 1px;
+}
