@@ -48,7 +48,6 @@
 .employee-types-bg {
   display: flex;
   flex-direction: row;
-  align-items: center;
 }
 .search-bg {
   border-radius: 5px;
@@ -57,9 +56,10 @@
   border-width: 1px;
   height: 25px;
   display: flex;
+  width: 200px;
   flex-direction: row;
   align-items: center;
-  margin-left: 10px;
+  margin-left: 40px;
 }
 
 .search-icon {
@@ -88,4 +88,14 @@
   border-style: none;
   color: white;
   margin-left: 1px;
+}
+.jobs-loader-bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  margin-top: 150px;
+  margin-left: 200px;
+  color: white;
 }

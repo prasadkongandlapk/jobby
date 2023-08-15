@@ -53,7 +53,8 @@ class Jobs extends Component {
     searchInput: '',
     isCheckBoxClicked: '',
     isSearchClicked: false,
-    jobs: {},
+    jobs: [],
+    isJobsLoading: true,
   }
 
   componentDidMount() {
@@ -94,7 +95,7 @@ class Jobs extends Component {
       title: each.title,
     }))
 
-    this.setState({jobs: formattedData})
+    this.setState({jobs: formattedData, isJobsLoading: false})
   }
 
   getProfileData = async () => {
@@ -127,7 +128,14 @@ class Jobs extends Component {
   }
 
   render() {
-    const {profileInfo, jobs, profileLoader, searchInput} = this.state
+    const {
+      profileInfo,
+      jobs,
+      isLoading,
+      profileLoader,
+      searchInput,
+      isJobsLoading,
+    } = this.state
     return (
       <div className="jobs-bg">
         <Header />
@@ -182,26 +190,34 @@ class Jobs extends Component {
               </div>
             ))}
           </div>
-          <div className="search-bg">
-            <input
-              onChange={this.onSearchInput}
-              className="search-input"
-              type="search"
-              value={searchInput}
-            />
-            <button
-              type="button"
-              onClick={this.onSearchBtn}
-              className="search-btn"
-            >
-              <BiSearchAlt2 className="search-icon" />
-            </button>
+          <div>
+            <div className="search-bg">
+              <input
+                onChange={this.onSearchInput}
+                className="search-input"
+                type="search"
+                value={searchInput}
+              />
+              <button
+                type="button"
+                onClick={this.onSearchBtn}
+                className="search-btn"
+              >
+                <BiSearchAlt2 className="search-icon" />
+              </button>
+            </div>
+            <ul className="">
+              {isJobsLoading ? (
+                <div className="jobs-loader-bg">
+                  <Loader color="white" width={50} type="ThreeDots" />
+                </div>
+              ) : (
+                jobs.map(jobItem => (
+                  <JobItem jobInfo={jobItem} key={jobItem.id} />
+                ))
+              )}
+            </ul>
           </div>
-          <ul className="">
-            {jobs.map(jobItem => (
-              <JobItem jobInfo={jobItem} key={jobItem.id} />
-            ))}
-          </ul>
         </div>
       </div>
     )
