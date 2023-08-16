@@ -10,24 +10,30 @@ const Header = props => {
   }
 
   return (
-    <div className="header-bg">
-      <img
-        className="logo-img"
-        src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
-        alt="website logo"
-      />
-      <div className="h-j">
+    <ul className="header-bg">
+      <li>
+        <Link to="/">
+          <img
+            className="logo-img"
+            src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
+            alt="website logo"
+          />
+        </Link>
+      </li>
+      <li className="h-j">
         <Link to="/">
           <p className="p">Home</p>
         </Link>
         <Link to="/jobs">
           <p className="p">Jobs</p>
         </Link>
-      </div>
-      <button type="button" onClick={onLogout} className="logout-btn">
-        Logout
-      </button>
-    </div>
+      </li>
+      <li>
+        <button type="button" onClick={onLogout} className="logout-btn">
+          Logout
+        </button>
+      </li>
+    </ul>
   )
 }
 export default withRouter(Header)

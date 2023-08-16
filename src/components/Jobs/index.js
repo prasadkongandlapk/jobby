@@ -44,22 +44,36 @@ const salaryRangesList = [
   },
 ]
 
+const status = {
+  loading: 'LOADING',
+  success: 'SUCCESS',
+  failure: 'FAILURE',
+}
+
 class Jobs extends Component {
   state = {
     employTypeId: '',
     salaryId: '',
     profileInfo: {},
-    profileLoader: true,
     searchInput: '',
     isCheckBoxClicked: '',
     isSearchClicked: false,
     jobs: [],
-    isJobsLoading: true,
+    apiStatus: status.loading,
+    jobStatus: status.loading,
   }
 
   componentDidMount() {
     this.getProfileData()
     this.getJobs()
+  }
+
+  onClickJob = () => {
+    this.getJobs()
+  }
+
+  onClickProfile = () => {
+    this.getProfileData()
   }
 
   onSearchInput = event => {
@@ -84,18 +98,21 @@ class Jobs extends Component {
     }
     const response = await fetch(jobUrl, options)
     const data = await response.json()
-    const formattedData = data.jobs.map(each => ({
-      companyLogoUrl: each.company_logo_url,
-      employmentType: each.employment_type,
-      id: each.id,
-      jobDescription: each.job_description,
-      location: each.location,
-      packagePerAnnum: each.package_per_annum,
-      rating: each.rating,
-      title: each.title,
-    }))
-
-    this.setState({jobs: formattedData, isJobsLoading: false})
+    if (response.ok === true) {
+      const formattedData = data.jobs.map(each => ({
+        companyLogoUrl: each.company_logo_url,
+        employmentType: each.employment_type,
+        id: each.id,
+        jobDescription: each.job_description,
+        location: each.location,
+        packagePerAnnum: each.package_per_annum,
+        rating: each.rating,
+        title: each.title,
+      }))
+      this.setState({jobs: formattedData, jobStatus: status.success})
+    } else {
+      this.setState({jobStatus: status.failure})
+    }
   }
 
   getProfileData = async () => {
@@ -111,12 +128,16 @@ class Jobs extends Component {
     }
     const response = await fetch(url, options)
     const data = await response.json()
-    const formattedData = {
-      name: data.profile_details.name,
-      profileImg: data.profile_details.profile_image_url,
-      shortBio: data.profile_details.short_bio,
+    if (response.ok === true) {
+      const formattedData = {
+        name: data.profile_details.name,
+        profileImg: data.profile_details.profile_image_url,
+        shortBio: data.profile_details.short_bio,
+      }
+      this.setState({profileInfo: formattedData, apiStatus: status.success})
+    } else {
+      this.setState({apiStatus: status.failure})
     }
-    this.setState({profileInfo: formattedData, profileLoader: false})
   }
 
   onClickCheckBox = event => {
@@ -127,68 +148,149 @@ class Jobs extends Component {
     this.setState({salaryId: event.target.value})
   }
 
+  failureView = () => (
+    <div className="failure-bg">
+      <button type="button" onClick={this.onClickProfile} className="retry-btn">
+        Retry
+      </button>
+    </div>
+  )
+
+  loadingView = () => (
+    <div data-testid="loader">
+      <Loader width={50} color="white" type="ThreeDots" />
+    </div>
+  )
+
+  profileView = () => {
+    const {profileInfo} = this.state
+    return (
+      <div className="profile-bg-bg">
+        <div className="profile-bg">
+          <img
+            className="profile-size"
+            src={profileInfo.profileImg}
+            alt="profile"
+          />
+          <h3 className="profile-name">{profileInfo.name}</h3>
+          <p className="short-bio">{profileInfo.shortBio}</p>
+        </div>
+      </div>
+    )
+  }
+
+  jobsView = () => {
+    const {jobs} = this.state
+    return (
+      <ul className="">
+        {jobs.map(jobItem => (
+          <JobItem jobInfo={jobItem} key={jobItem.id} />
+        ))}
+      </ul>
+    )
+  }
+
+  renderProfile = () => {
+    const {apiStatus} = this.state
+    switch (apiStatus) {
+      case status.loading:
+        return this.loadingView()
+      case status.failure:
+        return this.failureView()
+      case status.success:
+        return this.profileView()
+      default:
+        return null
+    }
+  }
+
+  jobLoadingView = () => (
+    <div data-testid="loader" className="loader-jobs">
+      <Loader width={50} color="white" type="ThreeDots" />
+    </div>
+  )
+
+  jobFailureView = () => (
+    <div className="no-jobs-bg">
+      <img
+        src="https://assets.ccbp.in/frontend/react-js/no-jobs-img.png "
+        alt="failure view"
+      />
+      <h1>No Jobs Found</h1>
+      <h1>Oops, Something Went Wrong</h1>
+      <p>We cannot seem to find the page you are looking for.</p>{' '}
+      <button type="button" onClick={this.onClickJob} className="retry-btn">
+        Retry
+      </button>
+    </div>
+  )
+
+  renderJobs = () => {
+    const {jobStatus} = this.state
+    switch (jobStatus) {
+      case status.loading:
+        return this.jobLoadingView()
+      case status.failure:
+        return this.jobFailureView()
+      case status.success:
+        return this.jobsView()
+      default:
+        return null
+    }
+  }
+
   render() {
-    const {
-      profileInfo,
-      jobs,
-      isLoading,
-      profileLoader,
-      searchInput,
-      isJobsLoading,
-    } = this.state
+    const {searchInput, employTypeId, salaryId} = this.state
     return (
       <div className="jobs-bg">
         <Header />
         <div className="jobs-card">
           <div className="filters-card">
-            <div className="profile-bg-bg">
-              {profileLoader ? (
-                <Loader width={50} color="white" type="ThreeDots" />
-              ) : (
-                <div className="profile-bg">
-                  <img
-                    className="profile-size"
-                    src={profileInfo.profileImg}
-                    alt="profile"
-                  />
-                  <h3 className="profile-name">{profileInfo.name}</h3>
-                  <p className="short-bio">{profileInfo.shortBio}</p>
-                </div>
-              )}
-            </div>
+            {this.renderProfile()}
             <div className="hr">
               <hr />
             </div>
-            <h5 className="h5-type-of-employee">Type of Employment</h5>
-            {employmentTypesList.map(each => (
-              <div className="employee-types-bg">
-                <input
-                  name="checkBox"
-                  onClick={this.onClickCheckBox}
-                  id="check"
-                  type="checkbox"
-                  value={each.employmentTypeId}
-                />
-                <label value="checkBox" htmlFor="check">
-                  {each.label}
-                </label>
-              </div>
-            ))}
-            <h5 className="h5-type-of-employee">Salary Range</h5>
-            {salaryRangesList.map(each => (
-              <div className="employee-types-bg">
-                <input
-                  name="radio"
-                  id="radio"
-                  type="radio"
-                  value={each.salaryRangeId}
-                  onClick={this.onClickRadio}
-                />
-                <label value="radio" htmlFor="radio">
-                  {each.label}
-                </label>
-              </div>
-            ))}
+
+            <h3 className="h5-type-of-employee">Type of Employment</h3>
+            <ul className="employee-types-bg">
+              {employmentTypesList.map(each => (
+                <li
+                  key={employmentTypesList.employTypeId}
+                  className="employee-type-bg"
+                >
+                  <input
+                    name="checkBox"
+                    onClick={this.onClickCheckBox}
+                    id="check"
+                    type="checkbox"
+                    value={each.employTypeId}
+                  />
+                  <label value="checkBox" htmlFor="check">
+                    {each.label}
+                  </label>
+                </li>
+              ))}
+            </ul>
+            <h3 className="h5-type-of-employee">Salary Range</h3>
+            <ul>
+              {salaryRangesList.map(each => (
+                <li
+                  key={salaryRangesList.salaryId}
+                  className="employee-type-bg"
+                >
+                  <input
+                    name="radio"
+                    id="radio"
+                    type="radio"
+                    value={each.salaryId}
+                    onClick={this.onClickRadio}
+                  />
+                  <label value="radio" htmlFor="radio">
+                    {each.label}
+                  </label>
+                </li>
+              ))}
+            </ul>
           </div>
           <div>
             <div className="search-bg">
@@ -200,23 +302,14 @@ class Jobs extends Component {
               />
               <button
                 type="button"
+                data-testid="searchButton"
                 onClick={this.onSearchBtn}
                 className="search-btn"
               >
                 <BiSearchAlt2 className="search-icon" />
               </button>
             </div>
-            <ul className="">
-              {isJobsLoading ? (
-                <div className="jobs-loader-bg">
-                  <Loader color="white" width={50} type="ThreeDots" />
-                </div>
-              ) : (
-                jobs.map(jobItem => (
-                  <JobItem jobInfo={jobItem} key={jobItem.id} />
-                ))
-              )}
-            </ul>
+            {this.renderJobs()}
           </div>
         </div>
       </div>

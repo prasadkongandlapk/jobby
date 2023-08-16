@@ -21,12 +21,12 @@ class JobItem extends Component {
 
     return (
       <Link to={`/jobs/${id}`}>
-        <div className="job-item-bg">
+        <li className="job-items-bg">
           <div className="logo-rating-bg">
             <img
               className="company-logo-img"
               src={companyLogoUrl}
-              alt={title}
+              alt="company logo"
             />
             <div className="title-rating-bg">
               <h5 className="title">{title}</h5>
@@ -51,9 +51,9 @@ class JobItem extends Component {
             <p className="description">{packagePerAnnum}</p>
           </div>
           <hr />
-          <p className="description-p">Description</p>
+          <h5 className="description-p">Description</h5>
           <p className="description">{jobDescription}</p>
-        </div>
+        </li>
       </Link>
     )
   }

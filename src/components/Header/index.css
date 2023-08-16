@@ -5,7 +5,10 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding-right: 50px;
+  padding-top: 10px;
+}
+li {
+  list-style: none;
 }
 .h-j {
   display: flex;

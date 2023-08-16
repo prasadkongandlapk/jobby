@@ -15,6 +15,10 @@
   border-radius: 5px;
   color: white;
   margin-top: 20px;
+  font-size: 13px;
+  padding-top: 5px;
+  text-decoration: none;
+  text-align: center;
 }
 .home-card {
   color: white;

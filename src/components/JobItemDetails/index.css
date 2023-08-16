@@ -1,0 +1,85 @@
+.job-item-details-bg {
+  background-color: black;
+  width: 100vw;
+  background-size: cover;
+  color: white;
+  font-family: 'roboto';
+}
+.job-item-bg {
+  margin: 20px;
+  padding: 20px;
+  background-color: #272727;
+  background-size: cover;
+  border-radius: 10px;
+}
+.loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 170px;
+}
+.visit {
+  color: #6366f1;
+}
+
+.description-visit-button-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+li {
+  list-style: none;
+  margin-right: 80px;
+  margin-bottom: 30px;
+}
+.skills-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.skill-bg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.life-bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.life-description {
+  width: 60vw;
+  font-size: 15px;
+}
+.skill-img {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+h5 {
+  height: 10px;
+}
+.similar-jobs-heading {
+  margin-left: 20px;
+}
+.similar-job-bg {
+  width: 25vw;
+  margin-right: 30px;
+  background-color: #272727;
+  padding: 20px;
+  font-size: 10px;
+  border-radius: 10px;
+  font-family: 'roboto';
+}
+.similar-jobs-bg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

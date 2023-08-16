@@ -55,7 +55,7 @@ class Login extends Component {
           <img
             className="logo-img"
             src="https://assets.ccbp.in/frontend/react-js/logo-img.png "
-            alt="website log"
+            alt="website logo"
           />
           <form onSubmit={this.onSubmitForm}>
             <div className="label-input-bg">

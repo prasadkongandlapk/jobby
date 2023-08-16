@@ -1,4 +1,5 @@
 import './index.css'
+import {Link} from 'react-router-dom'
 import {Component} from 'react'
 import Header from '../Header'
 
@@ -20,13 +21,11 @@ class Home extends Component {
               company reviews. Find the job that fits your ability and potential
             </p>
           </div>
-          <button
-            onClick={this.onFindJobs}
-            type="button"
-            className="find-jobs-btn"
-          >
-            Find Jobs
-          </button>
+          <Link to="/jobs">
+            <button type="button" className="find-jobs-btn">
+              Find Jobs
+            </button>
+          </Link>
         </div>
       </div>
     )
