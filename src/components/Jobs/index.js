@@ -52,7 +52,7 @@ const status = {
 
 class Jobs extends Component {
   state = {
-    employTypeId: '',
+    employTypeId: [],
     salaryId: '',
     profileInfo: {},
     searchInput: '',
@@ -141,11 +141,20 @@ class Jobs extends Component {
   }
 
   onClickCheckBox = event => {
-    this.setState({employTypeId: event.target.value})
+    const {employTypeId} = this.state
+    if (employTypeId.includes(event)) {
+      this.setState(prevState => ({
+        employTypeId: prevState.employTypeId.filter(each => each !== event),
+      }))
+    } else {
+      this.setState(prevState => ({
+        employTypeId: [...prevState.employTypeId, event],
+      }))
+    }
   }
 
   onClickRadio = event => {
-    this.setState({salaryId: event.target.value})
+    this.setState({salaryId: event})
   }
 
   failureView = () => (
@@ -218,7 +227,7 @@ class Jobs extends Component {
       />
       <h1>No Jobs Found</h1>
       <h1>Oops, Something Went Wrong</h1>
-      <p>We cannot seem to find the page you are looking for.</p>{' '}
+      <p>We cannot seem to find the page you are looking for.</p>
       <button type="button" onClick={this.onClickJob} className="retry-btn">
         Retry
       </button>
