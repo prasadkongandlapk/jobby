@@ -143,15 +143,25 @@ class Jobs extends Component {
   onClickCheckBox = event => {
     const {employTypeId} = this.state
     if (employTypeId.includes(event.target.value)) {
-      this.setState(prevState => ({
-        employTypeId: prevState.employTypeId.filter(
-          each => each !== event.target.value,
+      this.setState(
+        prevState => (
+          {
+            employTypeId: prevState.employTypeId.filter(
+              each => each !== event.target.value,
+            ),
+          },
+          this.getJobs
         ),
-      }))
+      )
     } else {
-      this.setState(prevState => ({
-        employTypeId: [...prevState.employTypeId, event.target.value],
-      }))
+      this.setState(
+        prevState => (
+          {
+            employTypeId: [...prevState.employTypeId, event.target.value],
+          },
+          this.getJobs
+        ),
+      )
     }
   }
 
@@ -269,11 +279,11 @@ class Jobs extends Component {
                   <input
                     name="checkBox"
                     onClick={this.onClickCheckBox}
-                    id="check"
+                    id="c"
                     type="checkbox"
                     value={each.employmentTypeId}
                   />
-                  <label value="checkBox" htmlFor="check">
+                  <label value="checkBox" htmlFor="c">
                     {each.label}
                   </label>
                 </li>
@@ -285,12 +295,12 @@ class Jobs extends Component {
                 <li key={each.salaryRangeId} className="employee-type-bg">
                   <input
                     name="radio"
-                    id="radio"
+                    id="rr"
                     type="radio"
                     value={each.salaryRangeId}
                     onClick={this.onClickRadio}
                   />
-                  <label value="radio" htmlFor="radio">
+                  <label value="radio" htmlFor="rr">
                     {each.label}
                   </label>
                 </li>
