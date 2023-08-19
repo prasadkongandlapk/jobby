@@ -81,7 +81,7 @@ class Jobs extends Component {
   }
 
   onSearchBtn = () => {
-    this.setState({isSearchClicked: true})
+    this.setState({isSearchClicked: true}, this.getJobs)
   }
 
   getJobs = async () => {
@@ -142,19 +142,21 @@ class Jobs extends Component {
 
   onClickCheckBox = event => {
     const {employTypeId} = this.state
-    if (employTypeId.includes(event)) {
+    if (employTypeId.includes(event.target.value)) {
       this.setState(prevState => ({
-        employTypeId: prevState.employTypeId.filter(each => each !== event),
+        employTypeId: prevState.employTypeId.filter(
+          each => each !== event.target.value,
+        ),
       }))
     } else {
       this.setState(prevState => ({
-        employTypeId: [...prevState.employTypeId, event],
+        employTypeId: [...prevState.employTypeId, event.target.value],
       }))
     }
   }
 
   onClickRadio = event => {
-    this.setState({salaryId: event})
+    this.setState({salaryId: event.target.value}, this.getJobs)
   }
 
   failureView = () => (
@@ -227,7 +229,7 @@ class Jobs extends Component {
       />
       <h1>No Jobs Found</h1>
       <h1>Oops, Something Went Wrong</h1>
-      <p>We cannot seem to find the page you are looking for.</p>
+      <p>We could not find any jobs. Try other filters</p>
       <button type="button" onClick={this.onClickJob} className="retry-btn">
         Retry
       </button>
@@ -263,16 +265,13 @@ class Jobs extends Component {
             <h3 className="h5-type-of-employee">Type of Employment</h3>
             <ul className="employee-types-bg">
               {employmentTypesList.map(each => (
-                <li
-                  key={employmentTypesList.employTypeId}
-                  className="employee-type-bg"
-                >
+                <li key={each.employmentTypeId} className="employee-type-bg">
                   <input
                     name="checkBox"
                     onClick={this.onClickCheckBox}
                     id="check"
                     type="checkbox"
-                    value={each.employTypeId}
+                    value={each.employmentTypeId}
                   />
                   <label value="checkBox" htmlFor="check">
                     {each.label}
@@ -283,15 +282,12 @@ class Jobs extends Component {
             <h3 className="h5-type-of-employee">Salary Range</h3>
             <ul>
               {salaryRangesList.map(each => (
-                <li
-                  key={salaryRangesList.salaryId}
-                  className="employee-type-bg"
-                >
+                <li key={each.salaryRangeId} className="employee-type-bg">
                   <input
                     name="radio"
                     id="radio"
                     type="radio"
-                    value={each.salaryId}
+                    value={each.salaryRangeId}
                     onClick={this.onClickRadio}
                   />
                   <label value="radio" htmlFor="radio">
