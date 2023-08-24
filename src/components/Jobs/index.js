@@ -144,23 +144,19 @@ class Jobs extends Component {
     const {employTypeId} = this.state
     if (employTypeId.includes(event.target.value)) {
       this.setState(
-        prevState => (
-          {
-            employTypeId: prevState.employTypeId.filter(
-              each => each !== event.target.value,
-            ),
-          },
-          this.getJobs
-        ),
+        prevState => ({
+          employTypeId: prevState.employTypeId.filter(
+            each => each !== event.target.value,
+          ),
+        }),
+        this.getJobs,
       )
     } else {
       this.setState(
-        prevState => (
-          {
-            employTypeId: [...prevState.employTypeId, event.target.value],
-          },
-          this.getJobs
-        ),
+        prevState => ({
+          employTypeId: [...prevState.employTypeId, event.target.value],
+        }),
+        this.getJobs,
       )
     }
   }
